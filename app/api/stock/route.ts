@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getSupabaseServerClient } from "../../../lib/supabase";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
   try {
@@ -18,7 +19,10 @@ export async function GET() {
       disponible: row.quantity > 0,
     }));
 
-    return NextResponse.json({ boissons });
+    return NextResponse.json(
+      { boissons },
+      { headers: { "Cache-Control": "no-store, max-age=0" } }
+    );
   } catch (err) {
     console.error(err);
     return NextResponse.json(
