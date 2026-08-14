@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getSupabaseServerClient } from "@/lib/supabase";
-import { envoyerNotificationTelegram } from "@/lib/telegram";
+import { getSupabaseServerClient } from "../../../lib/supabase";
+import { envoyerNotificationTelegram } from "../../../lib/telegram";
 
 export async function POST(request: Request) {
   try {
