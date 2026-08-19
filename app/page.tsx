@@ -83,6 +83,7 @@ export default function Page() {
             Cet événement est terminé. Ce lien n&apos;est plus actif. 🤍
           </p>
         </div>
+        <p style={styles.contact}>Site créé par Astrid · 06 95 51 36 25</p>
       </main>
     );
   }
@@ -158,6 +159,7 @@ export default function Page() {
           </>
         )}
       </div>
+      <p style={styles.contact}>Site créé par Astrid · 06 95 51 36 25</p>
     </main>
   );
 }
@@ -169,6 +171,7 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: "center",
     justifyContent: "center",
     padding: "24px",
+    position: "relative",
   },
   card: {
     width: "100%",
@@ -236,5 +239,13 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: 18,
     lineHeight: 1.6,
     margin: 0,
+  },
+  contact: {
+    position: "fixed",
+    bottom: 10,
+    right: 14,
+    margin: 0,
+    fontSize: 12,
+    color: "#a4919b",
   },
 };
