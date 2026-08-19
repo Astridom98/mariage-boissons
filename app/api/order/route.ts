@@ -2,7 +2,20 @@ import { NextResponse } from "next/server";
 import { getSupabaseServerClient } from "../../../lib/supabase";
 import { envoyerNotificationTelegram } from "../../../lib/telegram";
 
+function accesExpire() {
+  const dateLimite = process.env.ACCESS_DEADLINE;
+  if (!dateLimite) return false;
+  return new Date() >= new Date(dateLimite);
+}
+
 export async function POST(request: Request) {
+  if (accesExpire()) {
+    return NextResponse.json(
+      { error: "Cet événement est terminé. Ce lien n'est plus actif." },
+      { status: 403 }
+    );
+  }
+
   try {
     const body = await request.json();
     const prenom = (body.prenom ?? "").toString().trim();
