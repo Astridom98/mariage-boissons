@@ -4,6 +4,13 @@ import { useEffect, useState } from "react";
 
 type Boisson = { nom: string; disponible: boolean };
 
+const DATE_LIMITE = process.env.NEXT_PUBLIC_ACCESS_DEADLINE;
+
+function accesExpire() {
+  if (!DATE_LIMITE) return false;
+  return new Date() >= new Date(DATE_LIMITE);
+}
+
 export default function Page() {
   const [boissons, setBoissons] = useState<Boisson[]>([]);
   const [chargement, setChargement] = useState(true);
@@ -30,7 +37,9 @@ export default function Page() {
   }
 
   useEffect(() => {
-    chargerStock();
+    if (!accesExpire()) {
+      chargerStock();
+    }
   }, []);
 
   async function valider(e: React.FormEvent) {
@@ -64,6 +73,18 @@ export default function Page() {
     } finally {
       setEnvoi(false);
     }
+  }
+
+  if (accesExpire()) {
+    return (
+      <main style={styles.main}>
+        <div style={styles.card}>
+          <p style={styles.confirmation}>
+            Cet événement est terminé. Ce lien n&apos;est plus actif. 🤍
+          </p>
+        </div>
+      </main>
+    );
   }
 
   return (
