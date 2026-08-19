@@ -21,7 +21,7 @@ export async function GET() {
 
     return NextResponse.json(
       { boissons },
-      { headers: { "Cache-Control": "no-store, max-age=0" } }
+      { headers: { "Cache-Control": "no-store, max-age=0, must-revalidate" } }
     );
   } catch (err) {
     console.error(err);
