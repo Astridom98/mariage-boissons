@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getSupabaseServerClient } from "../../../../lib/supabase";
 
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 function motDePasseValide(request: Request) {
   const fourni = request.headers.get("x-admin-password") ?? "";
@@ -23,7 +24,10 @@ export async function GET(request: Request) {
 
     if (error) throw error;
 
-    return NextResponse.json({ stock: data });
+    return NextResponse.json(
+      { stock: data },
+      { headers: { "Cache-Control": "no-store, max-age=0, must-revalidate" } }
+    );
   } catch (err) {
     console.error(err);
     return NextResponse.json(
